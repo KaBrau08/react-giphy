@@ -1,0 +1,30 @@
+.grid-container
+	padding: 0 10px
+	.grid-wrapper
+		margin: auto
+		max-width: 1200px
+		a
+			display: block
+			img
+				display: block
+				height: 100%
+				object-fit: cover
+				object-position: center center
+				width: 100%
+			.gif-details
+				display: grid
+				grid-template-columns: 1fr 40px
+				grid-template-rows: 40px
+				.gif-title
+					@include ai(center)
+					@include df()
+					text-transform: capitalize
+					padding: 0 10px
+				.gif-rating
+					text-transform: uppercase
+					@include ai(center)
+					@include df()
+					justify-content: center
+					font:
+						size: 0.8em
+						weight: 700

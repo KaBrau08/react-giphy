@@ -1,0 +1,16 @@
+.home-container.hide-home
+	animation: HideHome 0.4s linear 0s 1 normal forwards
+	.home-wrapper
+		animation: ScaleHomeWrapper 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045) 0s 1 normal forwards
+
+@keyframes HideHome
+	0%
+		opacity: 1
+	100%
+		opacity: 0
+
+@keyframes ScaleHomeWrapper
+	0%
+		@include trf(scale(1))
+	100%
+		@include trf(scale(0.8))

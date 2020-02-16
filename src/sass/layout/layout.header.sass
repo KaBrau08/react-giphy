@@ -1,0 +1,42 @@
+header
+	display: grid
+	grid-template-areas: 'header' 'body' 'footer'
+	grid-template-columns: 1fr
+	grid-template-rows: 1fr auto 1fr
+	height: 100vh
+	position: relative
+	width: 100%
+	z-index: 1
+	.header-wrapper
+		grid-area: body
+		padding: 0 10px
+		.header-box
+			background-color: salmon
+			margin: auto
+			max-width: 480px
+			width: 100%
+			.header-title
+				@include ai(center)
+				@include df()
+				height: 40px
+				padding: 10px
+			form
+				display: grid
+				grid-template-columns: 1fr 40px
+				grid-template-rows: 40px
+				height: 40px
+				input[type="text"]
+					color: $color_primary_dark
+					padding: 0 10px
+				button
+					cursor: pointer
+					svg
+						display: block
+						height: 100%
+						padding: 10px
+						width: 100%
+						circle,
+						line
+							stroke-width: 2
+							stroke-linecap: square
+							stroke-linejoin: arcs
