@@ -1,0 +1,122 @@
+//*! // -------- Variables Globales -------------------------------------------- */
+
+//*! // -------- Colores ------------------------------------------------------- */
+
+//*! // -------- Fuentes ------------------------------------------------------- */
+// Fuente principal
+$Source: 'Source Code Pro', monospace; // 400, 700
+// Fuente secundaria
+$Roboto: 'Roboto', sans-serif; // 400, 700
+
+//*! // -------- Efectos ------------------------------------------------------- */
+// --------- Border Radious
+@mixin bdrs($args)
+	-webkit-border-radius: $args
+	-moz-border-radius: $args
+	border-radius: $args
+// --------- Box Shadow
+@mixin bxsh($args)
+	-webkit-box-shadow: $args
+	-moz-box-shadow: $args
+	box-shadow: $args
+// --------- Transform
+@mixin trf($args)
+	-webkit-transform: $args
+	-ms-transform: $args
+	-o-transform: $args
+	transform: $args
+// --------- Transition
+@mixin trs($args)
+	-webkit-transition: $args 0.4s ease
+	-moz-transition: $args 0.4s ease
+	-o-transition: $args 0.4s ease
+	-ms-transition: $args 0.4s ease
+	transition: $args 0.4s ease
+// --------- Transition Completa
+@mixin trs-complete($args)
+	-webkit-transition: $args
+	-moz-transition: $args
+	-o-transition: $args
+	-ms-transition: $args
+	transition: $args
+// --------- Background Size
+@mixin bgzs($args)
+	-webkit-background-size: $args
+	background-size: $args
+// --------- Touch Chrome
+@mixin touch-chrome()
+	-webkit-touch-callout: none
+	-webkit-user-select: none
+	-khtml-user-select: none
+	-moz-user-select: none
+	-ms-user-select: none
+	user-select: none
+// --------- User Select
+@mixin no-select($args)
+	-webkit-user-select: $args
+	-moz-user-select: $args
+	-khtml-user-select: $args
+	-ms-user-select: $args
+	-o-user-select: $args
+	user-select: $args
+// --------- Max Content
+@mixin width-maxcontent()
+	width: -webkit-max-content
+	width: -moz-max-content
+	width: max-content
+
+//*! // -------- Display Flex -------------------------------------------------- */
+// --------- Align Items
+@mixin ai($args)
+	-ms-align-items: $args
+	align-items: $args
+// --------- Align Self
+@mixin as($args)
+	-ms-align-self: $args
+	align-self: $args
+// --------- Display Flex
+@mixin df()
+	display: -webkit-flex
+	display: -moz-flex
+	display: -ms-flex
+	display: -o-flex
+	display: flex
+// --------- Flex Direction
+@mixin fxd($args)
+	-webkit-flex-direction: $args
+	-moz-flex-direction: $args
+	-ms-flex-direction: $args
+	-o-flex-direction: $args
+	flex-direction: $args
+// --------- Flex Wrap
+@mixin fxw($args)
+	-webkit-flex-wrap: $args
+	-moz-flex-wrap: $args
+	-ms-flex-wrap: $args
+	-o-flex-wrap: $args
+	flex-wrap: $args
+// --------- Flex Flow
+@mixin fxf($args)
+	-webkit-flex-flow: $args
+	-moz-flex-flow: $args
+	-ms-flex-flow: $args
+	-o-flex-flow: $args
+	flex-flow: $args
+// --------- Order
+@mixin ord($args)
+	-webkit-order: $args
+	-moz-order: $args
+	-ms-order: $args
+	-o-order: $args
+	order: $args
+
+//*! // -------- Placeholder --------------------------------------------------- */
+@mixin placeholder
+	&::-webkit-input-placeholder
+		@content
+	&:-moz-placeholder
+		@content
+	&::-moz-placeholder
+		@content
+	&:-ms-input-placeholder
+		@content
