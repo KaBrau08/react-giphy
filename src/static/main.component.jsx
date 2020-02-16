@@ -1,11 +1,13 @@
 //*! // -------- React --------------------------------------------------------- */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //*! // -------- Librerías ----------------------------------------------------- */
 import Axios from 'axios';
 
 //*! // -------- Componentes --------------------------------------------------- */
 import Home from '../components/home.component';
+import Header from '../static/header.component';
+import GridComponent from '../components/grid.component';
 
 //*! // -------- Globales ------------------------------------------------------ */
 // --------- GIPHY endpoint
@@ -35,7 +37,7 @@ const MainComponent = () => {
 		// Límite de GIF
 		const limit = `&limit=${args.limit || 40}`;
 		// Palabra para la búsqueda
-		const search = `&q=${args.search}`;
+		const searchText = `&q=${args.search}`;
 		// Paginación
 		const offset = `&offset=${args.offset || 0}`;
 		// Tiempo para ejecutar a setTimeout
@@ -43,7 +45,7 @@ const MainComponent = () => {
 		// Petición al endpoint
 		(async () => {
 			try {
-				const response = await Axios.get(`${endpoint}${limit}${search}${offset}`);
+				const response = await Axios.get(`${endpoint}${limit}${searchText}${offset}`);
 				const responseData = response.data;
 				setTimeout(() => {
 					setSearchResult(responseData.data);
@@ -55,10 +57,27 @@ const MainComponent = () => {
 		})();
 	};
 
+	// --------- TEMPORAL
+	useEffect(() => {
+		/* console.log('----');
+		console.log(search);
+		console.log(searchStatus);
+		console.log(searchResult);
+		console.log(pagination);
+		console.log('++++'); */
+	});
+
 	// --------- Elementos del componente / Render React
 	return (
 		<main>
-			<Home {...{ endpoint, searchStatus }} />
+			<Header {...{ searchStatus, handleSearch, handleSearchStatus, handleRequest }} />
+			{
+				searchResult.length === 0 ? (
+					<Home {...{ endpoint, searchStatus }} />
+				) : (
+					<GridComponent {...{ search, searchResult, pagination, handleRequest }} />
+				)
+			}
 		</main>
 	);
 };

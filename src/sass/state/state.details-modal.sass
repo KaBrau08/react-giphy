@@ -1,0 +1,44 @@
+.details-container.details-open
+	animation: DetailsOpen 0.4s linear forwards
+	opacity: 0
+	.details-wrapper
+		.details-box
+			.details-item
+				animation: DetailsItemOpen 0.4s 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards
+				opacity: 0
+				trf(scale(0.5))
+
+.details-container.details-close
+	animation: DetailsClose 0.4s linear forwards
+	.details-wrapper
+		.details-box
+			.details-item
+				animation: DetailsItemClose 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards
+
+@keyframes DetailsOpen
+	0%
+		opacity: 0
+	100%
+		opacity: 1
+
+@keyframes DetailsItemOpen
+	0%
+		opacity: 0
+		@include trf(scale(0.5))
+	100%
+		opacity: 1
+		@include trf(scale(1))
+
+@keyframes DetailsClose
+	0%
+		opacity: 1
+	100%
+		opacity: 0
+
+@keyframes DetailsItemClose
+	0%
+		opacity: 1
+		@include trf(scale(1))
+	100%
+		opacity: 0
+		@include trf(scale(0.5))
