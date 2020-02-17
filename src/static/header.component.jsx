@@ -18,6 +18,7 @@ const HeaderComponent = props => {
 	// Envío de la consulta a GIPHY
 	const handleSubmit = event => {
 		event.preventDefault();
+		if (search === '') { return; };
 		handleSearch(search);
 		handleSearchStatus(true);
 		handleRequest({ search, time:400 });

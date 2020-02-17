@@ -1,0 +1,24 @@
+.preloader-container
+	.preloader-text
+		&::before
+			animation: Writing 1s linear 0s infinite normal forwards
+.preloader-container.preloader-out
+	animation: HidePreloader 0.4s linear 0s 1 normal forwards
+
+@keyframes Writing
+	0%
+		content: 'Loading'
+	25%
+		content: '.Loading.'
+	50%
+		content: '..Loading..'
+	75%
+		content: '...Loading...'
+	100%
+		content: 'Loading'
+
+@keyframes HidePreloader
+	0%
+		opacity: 1
+	100%
+		opacity: 0

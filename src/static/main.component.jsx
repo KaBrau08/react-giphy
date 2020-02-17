@@ -1,5 +1,5 @@
 //*! // -------- React --------------------------------------------------------- */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 //*! // -------- Librerías ----------------------------------------------------- */
 import Axios from 'axios';
@@ -45,7 +45,7 @@ const MainComponent = () => {
 		// Petición al endpoint
 		(async () => {
 			try {
-				const response = await Axios.get(`${endpoint}${limit}${searchText}${offset}`);
+				const response = await Axios.get(`${endpoint}${limit}${encodeURI(searchText)}${offset}`);
 				const responseData = response.data;
 				setTimeout(() => {
 					setSearchResult(responseData.data);
@@ -56,16 +56,6 @@ const MainComponent = () => {
 			}
 		})();
 	};
-
-	// --------- TEMPORAL
-	useEffect(() => {
-		/* console.log('----');
-		console.log(search);
-		console.log(searchStatus);
-		console.log(searchResult);
-		console.log(pagination);
-		console.log('++++'); */
-	});
 
 	// --------- Elementos del componente / Render React
 	return (

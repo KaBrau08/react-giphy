@@ -7,6 +7,7 @@ import Macy from 'macy';
 //*! // -------- Componentes --------------------------------------------------- */
 import DetailsModalComponent from './details-modal.component';
 import PaginationComponent from './pagination.component';
+import PreloaderComponent from './preloader.component';
 
 //*! // -------- Componente funcional ------------------------------------------ */
 const GridComponent = props => {
@@ -14,7 +15,10 @@ const GridComponent = props => {
 	const { search, searchResult, pagination, handleRequest } = props;
 
 	// --------- Estados
+	// Resultados de la consulta
 	const [gifDetails, setGifDetails] = useState(null);
+	// Ocultar a preloader cuando se terminen de cargar las imágenes
+	const [preloader, setPreloader] = useState(true);
 
 	// --------- Manejadores
 	const handleMouseInOut = (event, data) => {
@@ -23,7 +27,7 @@ const GridComponent = props => {
 		const img = currentTarget.querySelector('img');
 		img.setAttribute('src', url);
 	};
-	const detailsOpen = (event, image, title, rating) => {
+	const detailsOpen = (image, title, rating) => {
 		const { webp } = image;
 		setGifDetails({ webp, title, rating });
 	};
@@ -35,6 +39,7 @@ const GridComponent = props => {
 		let macyInstance;
 		let resultLength = searchResult.length;
 		const mounting = () => {
+			setPreloader(true);
 			macyInstance = new Macy({
 				container: '#grid-items',
 				columns: 4,
@@ -47,18 +52,17 @@ const GridComponent = props => {
 					1200: 4
 				}
 			});
+			macyInstance.on(macyInstance.constants.EVENT_IMAGE_COMPLETE, () => setPreloader(false));
 		};
 		resultLength > 0 && mounting();
 		return () => { macyInstance && macyInstance.remove(); };
 	}, [searchResult]);
 
-	// --------- Temporal
-	// useEffect(() => { console.log(gifDetails); }, [gifDetails]);
-
 	// --------- Elementos del componente / Render React
 	return (
 		<div className="grid-container">
 			<div className="grid-wrapper">
+				<PreloaderComponent status={preloader} position='header' />
 				<PaginationComponent {...{ search, pagination, handleRequest }} />
 				<div id="grid-items" className="grid-items">
 					{
@@ -69,21 +73,17 @@ const GridComponent = props => {
 								<div
 									className="grid-item"
 									key={id}
-									onMouseEnter={event => handleMouseInOut(event, fixed_width)}
-									onMouseLeave={event => handleMouseInOut(event, fixed_width_still)}
-									onClick={event => detailsOpen(event, original, title, rating)}
+									onMouseOver={event => handleMouseInOut(event, fixed_width)}
+									onMouseOut={event => handleMouseInOut(event, fixed_width_still)}
+									onClick={() => detailsOpen(original, title, rating)}
 								>
 									<img src={fixed_width_still.url} alt="" />
-									<div className="gif-details">
-										<div className="gif-title">{title}</div>
-										<div className="gif-rating">{rating}</div>
-									</div>
+									<div className="gif-instructions">Hover Me — Click Me</div>
 								</div>
 							);
 						})
 					}
 				</div>
-				<PaginationComponent {...{ search, pagination, handleRequest }} />
 			</div>
 			{gifDetails && <DetailsModalComponent {...{ gifDetails, detailsClose }} />}
 		</div>

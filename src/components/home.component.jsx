@@ -1,5 +1,5 @@
 //*! // -------- React --------------------------------------------------------- */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 
 //*! // -------- Librerías ----------------------------------------------------- */
 import Axios from 'axios';
@@ -7,6 +7,7 @@ import Macy from 'macy';
 
 //*! // -------- Mock ---------------------------------------------------------- */
 import celebration from '../mock/celebration';
+import PreloaderComponent from './preloader.component';
 
 //*! // -------- Componente funcional ------------------------------------------ */
 const HomeComponent = props => {
@@ -14,10 +15,10 @@ const HomeComponent = props => {
 	const { endpoint, searchStatus } = props;
 
 	// --------- Estados
+	// Resultados de la consulta para home
 	const [result, setResult] = useState([]);
-
-	// --------- Manejadores
-	// const handleOnLoad = () => { console.log('Hola'); };
+	// Ocultar a preloader cuando se terminen de cargar las imágenes
+	const [preloader, setPreloader] = useState(true);
 
 	// --------- Efectos
 	// Llamada al 'endpoint' de GIPHY
@@ -39,6 +40,7 @@ const HomeComponent = props => {
 				container: '#home-box',
 				columns: 4
 			});
+			macyInstance.on(macyInstance.constants.EVENT_IMAGE_COMPLETE, () => setPreloader(false));
 		};
 		resultLength > 0 && mounting();
 		return () => { macyInstance && macyInstance.remove(); };
@@ -49,19 +51,22 @@ const HomeComponent = props => {
 
 	// --------- Elementos del componente / Render React
 	return (
-		<div className={cssClass}>
-			<div className="home-wrapper">
-				<div id="home-box" className="home-box">
-					{
-						result.map(resultData => {
-							const gifID = resultData.id;
-							const gifURL = resultData.images.fixed_width.url;
-							return <img src={gifURL} data-state="animate" alt="" key={gifID} />;
-						})
-					}
+		<Fragment>
+			<PreloaderComponent status={preloader} />
+			<div className={cssClass}>
+				<div className="home-wrapper">
+					<div id="home-box" className="home-box">
+						{
+							result.map(resultData => {
+								const gifID = resultData.id;
+								const gifURL = resultData.images.fixed_width.url;
+								return <img src={gifURL} data-state="animate" alt="" key={gifID} />;
+							})
+						}
+					</div>
 				</div>
 			</div>
-		</div>
+		</Fragment>
 	);
 };
 //*! // -------- Exportando el componente -------------------------------------- */
