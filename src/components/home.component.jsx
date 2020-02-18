@@ -60,7 +60,7 @@ const HomeComponent = props => {
 							result.map(resultData => {
 								const gifID = resultData.id;
 								const gifURL = resultData.images.fixed_width.url;
-								return <img src={gifURL} data-state="animate" alt="" key={gifID} />;
+								return <img src={gifURL} alt="" key={gifID} />;
 							})
 						}
 					</div>

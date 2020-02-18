@@ -35,21 +35,26 @@ const MainComponent = () => {
 	// Peticiones al endpoint de GIPHY
 	const handleRequest = args => {
 		// Límite de GIF
-		const limit = `&limit=${args.limit || 40}`;
+		const GIFLimit = args.limit || 40;
+		// Paginación actual
+		const GIFPagination = args.pagination || 0;
+		// Calculo de offset
+		const GIFOffset = GIFPagination * GIFLimit;
 		// Palabra para la búsqueda
-		const searchText = `&q=${args.search}`;
-		// Paginación
-		const offset = `&offset=${args.offset || 0}`;
-		// Tiempo para ejecutar a setTimeout
+		const GIFSearch = args.search || '';
+		// Tiempo para cambiar los estados del componente
 		const time = args.time || 0;
+		// URL para la consulta
+		const GIFUrl = `${endpoint}&limit=${GIFLimit}&offset=${GIFOffset}&q=${GIFSearch}`;
 		// Petición al endpoint
 		(async () => {
 			try {
-				const response = await Axios.get(`${endpoint}${limit}${encodeURI(searchText)}${offset}`);
+				const response = await Axios.get(GIFUrl);
 				const responseData = response.data;
+				const { data:GIFData } = responseData;
 				setTimeout(() => {
-					setSearchResult(responseData.data);
-					setPagination(responseData.pagination.offset);
+					setSearchResult(GIFData);
+					setPagination(GIFPagination + 1);
 				}, time);
 			} catch (err) {
 				console.error(err);
